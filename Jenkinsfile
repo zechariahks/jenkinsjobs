@@ -4,7 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 echo "${params.instancetype} World!"
-                sh '''#!/bin/bash
+                bat '''#!/bin/bash
 
 				AppID=`echo "${JOB_BASE_NAME}" | awk -F\\. \'{print $2}\'`
                 proxy="test"
