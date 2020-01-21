@@ -22,7 +22,7 @@ pipeline {
 
                     echo "${proxy}"
                     echo "${it}"
-                    def outputs = cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro']
+                    def outputs = cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro'])
                 }
 			}
 		}
