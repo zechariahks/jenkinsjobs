@@ -4,15 +4,16 @@ pipeline {
         stage('build') {
             steps {
                 echo "${params.instancetype} World!"
-                bat 'set proxy="test" \n set it=$(echo "$instancetype") '
+                bat 'set proxy="test" >> iaas.props '
+                bat  'set it=${params.instancetype} >> iaas.props '
             }
         }
         stage('AWS Cloud Formation') {
 
 			steps {
 
-                echo "%it%"
-                echo "%proxy%"
+                bat  'echo %it%'
+                bat  'echo %proxy%'
 				
 			}
 		}
