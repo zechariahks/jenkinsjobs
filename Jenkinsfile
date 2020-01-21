@@ -17,13 +17,8 @@ pipeline {
                 
                 withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
                     sh 'echo "hello KB">hello.txt'
-                    props = readProperties file:'iaas.props'
-                    env['proxy'] = props['proxy']
-                    env['it'] = props['it']
-
-                    echo "${proxy}"
-                    echo "${it}"
-                    outputs = cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro'])
+                    
+                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro'])
                 }
 			}
 		}
