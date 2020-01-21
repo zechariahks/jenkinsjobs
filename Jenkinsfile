@@ -17,13 +17,13 @@ pipeline {
                 
                 withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
                     sh 'echo "hello KB">hello.txt'
-                    def props = readProperties file:'iaas.props'
+                    props = readProperties file:'iaas.props'
                     env['proxy'] = props['proxy']
                     env['it'] = props['it']
 
                     echo "${proxy}"
                     echo "${it}"
-                    def outputs = cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro'])
+                    outputs = cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro'])
                 }
 			}
 		}
