@@ -11,8 +11,8 @@ pipeline {
 
 			steps {
 
-                echo %it%
-                echo %proxy%
+                echo "%it%"
+                echo "%proxy%"
 				
 			}
 		}
