@@ -6,7 +6,7 @@ pipeline {
                 echo "${params.instancetype} World!"
                 sh '''#!/bin/bash
                 proxy="test"
-                instance="${params.instancetype}"
+                instance="${instancetype}"
 				echo proxy=$(echo "$proxy") > iaas.props
 				echo it=$(echo "$instance") >> iaas.props'''
             }
@@ -23,8 +23,8 @@ pipeline {
                     echo "${proxy}"
                     echo "${it}"
                 }
-               
-				
+
+				vzAWS_CF_CICD_V2 region: 'us-west-2', stackName: 'teststack', templateName: 'webserver.json', templateParameter: '{"InstanceType":"${InstanceType}"}'
 			}
 		}
     }
