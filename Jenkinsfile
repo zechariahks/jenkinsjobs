@@ -6,7 +6,7 @@ pipeline {
                 echo "${params.instancetype} World!"
                 sh '''#!/bin/bash
                 proxy="test"
-                instance="${instancetype}"
+                export newinstancetype="t2.small"
 				echo proxy=$(echo "$proxy") > iaas.props
 				echo it=$(echo "$instance") >> iaas.props'''
             }
@@ -17,8 +17,8 @@ pipeline {
                 
                 withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
                     sh 'echo "hello KB">hello.txt'
-                    
-                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro'])
+                    sh "printenv | sort"
+                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': "${env.newinstancetype}"])
                 }
 			}
 		}
