@@ -18,7 +18,7 @@ pipeline {
                 withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
                     sh 'echo "hello KB">hello.txt'
                     sh "printenv | sort"
-                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': "${env.newinstancetype}"])
+                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': "$newinstancetype"])
                 }
 			}
 		}
