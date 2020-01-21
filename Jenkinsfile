@@ -4,12 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 echo "${params.instancetype} World!"
-                sh '''#!/bin/bash
-
-				AppID=`echo "${JOB_BASE_NAME}" | awk -F\\. \'{print $2}\'`
-                proxy="test"
-                echo proxy=$(echo "$proxy") >> iaas.props
-				echo it=$(echo "$instancetype") >> iaas.props'''
+                bat 'set proxy="test" \n set it=$(echo "$instancetype") '
             }
         }
         stage('AWS Cloud Formation') {
