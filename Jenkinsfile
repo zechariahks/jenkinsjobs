@@ -16,9 +16,10 @@ pipeline {
 			steps {
                 
                 withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
-                    def props = readProperties file:'iaas.props';
-                    env['proxy'] = props['proxy'];
-                    env['it'] = props['it'];
+                    sh 'echo "hello KB">hello.txt'
+                    def props = readProperties file:'iaas.props'
+                    env['proxy'] = props['proxy']
+                    env['it'] = props['it']
 
                     echo "${proxy}"
                     echo "${it}"
