@@ -14,17 +14,16 @@ pipeline {
         stage('AWS Cloud Formation') {
 
 			steps {
-
-                script {
+                
+                withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
                     def props = readProperties file:'iaas.props';
                     env['proxy'] = props['proxy'];
                     env['it'] = props['it'];
 
                     echo "${proxy}"
                     echo "${it}"
+                    def outputs = cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': 't2.micro']
                 }
-
-				vzAWS_CF_CICD_V2 region: 'us-west-2', stackName: 'teststack', templateName: 'webserver.json', templateParameter: '{"InstanceType":"${InstanceType}"}'
 			}
 		}
     }
