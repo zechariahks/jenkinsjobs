@@ -6,19 +6,22 @@ pipeline {
                 echo "${params.instancetype} World!"
                 sh '''#!/bin/bash
                 proxy="test"
-                export newinstancetype="t2.small"
+                newinstancetype="t2.medium"
 				echo proxy=$(echo "$proxy") > iaas.props
-				echo it=$(echo "$instance") >> iaas.props'''
+				echo type=$(echo "$newinstancetype") >> iaas.props'''
             }
         }
         stage('AWS Cloud Formation') {
 
 			steps {
+                script {
+                    def props = readProperties file:'iaas.props';
+                    env.instancetype2 = props['type'];
+                }
                 
                 withAWS(credentials: 'aws-credentials', region: 'us-west-2') {
-                    sh 'echo "hello KB">hello.txt'
                     sh "printenv | sort"
-                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': "$newinstancetype"])
+                    cfnUpdate(stack:'my-stack', file:'webserver.json', params:['InstanceType': "${env.instancetype2}"])
                 }
 			}
 		}
