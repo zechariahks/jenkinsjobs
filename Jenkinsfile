@@ -7,8 +7,8 @@ pipeline {
                 sh '''#!/bin/bash
                 proxy="test"
                 instance="${params.instancetype}"
-				echo proxy=$(echo "$proxy") >> iaas.props
-				echo it=$(echo "instance") >> iaas.props'''
+				echo proxy=$(echo "$proxy") > iaas.props
+				echo it=$(echo "$instance") >> iaas.props'''
             }
         }
         stage('AWS Cloud Formation') {
