@@ -5,12 +5,10 @@ pipeline {
             steps {
                 echo "${params.instancetype} World!"
                 sh '''#!/bin/bash
-
-				AppID=`echo "${JOB_BASE_NAME}" | awk -F\\. \'{print $2}\'`
                 proxy="test"
-				echo AppID=$(echo "$AppID") >> iaas.props
+                instance="${params.instancetype}"
 				echo proxy=$(echo "$proxy") >> iaas.props
-				echo it=$(echo "${params.instancetype}") >> iaas.props'''
+				echo it=$(echo "instance") >> iaas.props'''
             }
         }
         stage('AWS Cloud Formation') {
@@ -19,13 +17,13 @@ pipeline {
 
                 script {
                     def props = readProperties file:'iaas.props';
-                    env['AppID'] = props['AppID'];
                     env['proxy'] = props['proxy'];
                     env['it'] = props['it'];
+
+                    echo "${proxy}"
+                    echo "${it}"
                 }
-                echo "${proxy}"
-                echo "${it}"
-                echo "${AppID}"
+               
 				
 			}
 		}
